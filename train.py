@@ -31,9 +31,6 @@ if __name__ == '__main__':
     trainloader = DataLoader(trainset, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=16, drop_last=True)
         
     model = get_model(args.model, args.backbone, args.pretrained, len(trainset.CLASSES_LABEL))
-
-    if args.load_from:
-        model.load_state_dict(torch.load(args.load_from), strict=True)
         
     criterion = CrossEntropyLoss()
 
