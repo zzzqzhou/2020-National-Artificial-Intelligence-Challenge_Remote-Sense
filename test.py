@@ -1,5 +1,5 @@
 ﻿from rese import ReSe
-from models.model_zoo import get_model
+from models.model import get_model
 
 import argparse
 import numpy as np
