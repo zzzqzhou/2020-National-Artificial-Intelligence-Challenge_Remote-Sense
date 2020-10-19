@@ -1,6 +1,5 @@
-from datasets.rese import ReSe
-from models.model_zoo import get_model
-from utils.palette import color_map
+from rese import ReSe
+from models.model import get_model
 
 import numpy as np
 import os
