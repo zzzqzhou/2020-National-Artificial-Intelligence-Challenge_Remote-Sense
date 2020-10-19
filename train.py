@@ -1,6 +1,5 @@
 ﻿from rese import ReSe
 from models.model import get_model
-from utils.options import Options
 
 import argparse
 import os

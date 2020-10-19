@@ -2,7 +2,7 @@
 import torch
 import random
 import numpy as np
-from PIL import Image, ImageEnhance
+from PIL import Image
 from torch.utils.data import Dataset
 
 

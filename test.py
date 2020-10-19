@@ -1,7 +1,5 @@
 ﻿from rese import ReSe
 from models.model_zoo import get_model
-from utils.options import Options
-from utils.palette import color_map
 
 import argparse
 import numpy as np
