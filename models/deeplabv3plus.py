@@ -8,8 +8,8 @@ def conv3x3(in_channels, out_channels, atrous_rate=1):
     return nn.Conv2d(in_channels, out_channels, 3, padding=atrous_rate, dilation=atrous_rate, bias=False)
 
 
-def ASPPConv(in_channels, out_channels, atrous_rate, lightweight):
-    block = nn.Sequential(conv3x3(in_channels, out_channels, lightweight, atrous_rate),
+def ASPPConv(in_channels, out_channels, atrous_rate):
+    block = nn.Sequential(conv3x3(in_channels, out_channels, atrous_rate),
                           nn.BatchNorm2d(out_channels),
                           nn.ReLU(True))
     return block
@@ -72,7 +72,7 @@ class ASPPPooling(nn.Module):
 
 
 class ASPPModule(nn.Module):
-    def __init__(self, in_channels, atrous_rates, lightweight):
+    def __init__(self, in_channels, atrous_rates):
         super(ASPPModule, self).__init__()
         out_channels = in_channels // 8
         rate1, rate2, rate3 = tuple(atrous_rates)
@@ -80,9 +80,9 @@ class ASPPModule(nn.Module):
         self.b0 = nn.Sequential(nn.Conv2d(in_channels, out_channels, 1, bias=False),
                                 nn.BatchNorm2d(out_channels),
                                 nn.ReLU(True))
-        self.b1 = ASPPConv(in_channels, out_channels, rate1, lightweight)
-        self.b2 = ASPPConv(in_channels, out_channels, rate2, lightweight)
-        self.b3 = ASPPConv(in_channels, out_channels, rate3, lightweight)
+        self.b1 = ASPPConv(in_channels, out_channels, rate1)
+        self.b2 = ASPPConv(in_channels, out_channels, rate2)
+        self.b3 = ASPPConv(in_channels, out_channels, rate3)
         self.b4 = ASPPPooling(in_channels, out_channels)
 
         self.project = nn.Sequential(nn.Conv2d(5 * out_channels, out_channels, 1, bias=False),
