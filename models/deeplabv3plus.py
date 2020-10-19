@@ -31,7 +31,7 @@ class DeepLabV3Plus(BaseNet):
         self.fuse = nn.Sequential(conv3x3(high_level_channels // 8 + 48, 256),
                                   nn.BatchNorm2d(256),
                                   nn.ReLU(True),
-                                  nn.Dropout(0.5, False),
+                                  #nn.Dropout(0.5, False),
                                   conv3x3(256, 256),
                                   nn.BatchNorm2d(256),
                                   nn.ReLU(True),

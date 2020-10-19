@@ -14,14 +14,15 @@ import argparse
 if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
     parser = argparse.ArgumentParser("Model Ensemble")
-    parser.add_argument("--data-root", type=str, default="/home/ziqi/data/AI_Yaogan/image_B")
+    parser.add_argument("--data-root", type=str, default="./image_B")
+    parser.add_argument("--result-dir", type=str, default="./test_B")
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--backbone-1", type=str, default="resnet101")
     parser.add_argument("--model-1", type=str, default="deeplabv3plus")
     parser.add_argument("--backbone-2", type=str, default="resnext50")
     parser.add_argument("--model-2", type=str, default="deeplabv3plus")
-    parser.add_argument("--load-from-1", type=str, default='/home/ziqi/data/AI_Yaogan/result/resnet101_deeplabv3plus_001/models/deeplabv3plus_resnet101_best.pth')
-    parser.add_argument("--load-from-2", type=str ,default='/home/ziqi/data/AI_Yaogan/result/resnext50_deeplabv3plus_001/models/resnext50_deeplabv3plus_best.pth')
+    parser.add_argument("--load-from-1", type=str, default='./result/resnet101_deeplabv3plus_001/models/resnet101_deeplabv3plus_best.pth')
+    parser.add_argument("--load-from-2", type=str ,default='./result/resnext50_deeplabv3plus_001/models/resnext50_deeplabv3plus_best.pth')
     parser.add_argument("--tta", dest="tta", action="store_true")
     parser.add_argument("--pretrained", dest="pretrained", action="store_true")
     args = parser.parse_args()
@@ -47,8 +48,8 @@ if __name__ == '__main__':
     model_1 = DataParallel(model_1).cuda()
     model_2 = DataParallel(model_2).cuda()
 
-    if not os.path.exists('test_B/results'):
-        os.makedirs('test_B/results')
+    if not os.path.exists(os.path.join(args.result_dir, 'results')):
+        os.makedirs(os.path.join(args.result_dir, 'results'))
     
     with torch.no_grad():
         tbar = tqdm(testloader)
@@ -66,6 +67,6 @@ if __name__ == '__main__':
             
             for i, pred_mask in enumerate(predict):
                 pred_mask = Image.fromarray(pred_mask)
-                pred_mask.save(os.path.join('test_B/results', id[i] + '.png'))
+                pred_mask.save(os.path.join(args.result_dir, 'results', id[i] + '.png'))
             
             tbar.set_description("Testing")

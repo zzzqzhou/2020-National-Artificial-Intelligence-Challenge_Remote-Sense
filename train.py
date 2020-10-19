@@ -9,11 +9,11 @@ from torch.optim import SGD
 from torch.utils.data import DataLoader
 import torchvision.transforms as tfs
 from tqdm import tqdm
-        
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("NAIC2020")
-    parser.add_argument("--data-root", type=str, default="/home/ziqi/data/AI_Yaogan/train")
-    parser.add_argument("--log-dir", type=str, default="/home/ziqi/data/AI_Yaogan/result/resnet50_deeplabv3plus")
+    parser.add_argument("--data-root", type=str, default="./train")
+    parser.add_argument("--log-dir", type=str, default="./result/resnet50_deeplabv3plus")
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--epochs", type=int, default=120)
     parser.add_argument("--lr", type=float, default=0.001)
@@ -50,7 +50,6 @@ if __name__ == '__main__':
     if not os.path.exists(os.path.join(args.log_dir, 'models')):
         os.makedirs(os.path.join(args.log_dir, 'models'))
 
-    train_log = open(os.path.join(args.log_dir, 'train.log'), 'w')
     for epoch in range(args.epochs):
         print("\n==> Epoches %i, learning rate = %.5f\t\t\t\t previous best = %.2f" %
               (epoch + 1, optimizer.param_groups[0]["lr"], previous_best))
@@ -77,7 +76,4 @@ if __name__ == '__main__':
             optimizer.param_groups[1]['lr'] = lr * 10.0
             tbar.set_description('Loss: %.3f' % (total_loss / (i + 1)))
         train_loss = total_loss / count
-        train_log.write('Epoch: %d, Train Loss: %.3f\n' % (epoch + 1, train_loss))
-        train_log.flush()
         torch.save(model.module.state_dict(), os.path.join(args.log_dir, 'models', '%s_%s_best.pth' % (args.backbone, args.model)))
-    train_log.close()

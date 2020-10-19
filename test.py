@@ -13,8 +13,9 @@ from tqdm import tqdm
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("NAIC2020")
-    parser.add_argument("--data-root", type=str, default="/home/ziqi/data/AI_Yaogan/image_B")
-    parser.add_argument("--log-dir", type=str, default="/home/ziqi/data/AI_Yaogan/result/resnet50_pspnet_001")
+    parser.add_argument("--data-root", type=str, default="./image_B")
+    parser.add_argument("--result-dir", type=str, default="./test_B")
+    parser.add_argument("--log-dir", type=str, default="./result/resnet50_pspnet_001")
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--backbone", type=str, default="resnet50")
     parser.add_argument("--model", type=str, default="pspnet")
@@ -36,8 +37,8 @@ if __name__ == '__main__':
     model.load_state_dict(torch.load(args.load_from), strict=True)
     model.eval()
     model = DataParallel(model).cuda()
-    if not os.path.exists('test_B/results'):
-        os.makedirs('test_B/results')
+    if not os.path.exists(os.path.join(args.result_dir, 'results')):
+        os.makedirs(os.path.join(args.result_dir, 'results'))
     with torch.no_grad():
         tbar = tqdm(testloader)
         for img, id in tbar:
@@ -49,5 +50,5 @@ if __name__ == '__main__':
             predict *= 100
             for i, pred_mask in enumerate(predict):
                 pred_mask = Image.fromarray(pred_mask)
-                pred_mask.save(os.path.join('test_B/results', id[i] + '.png'))
+                pred_mask.save(os.path.join(args.result_dir, 'results', id[i] + '.png'))
             tbar.set_description("Testing")

@@ -1,0 +1,2 @@
+#!/bin/sh
+python ensemble.py --data-root ./image_B --result-dir ./test_B_ensemble --batch-size 32 --backbone-1 resnet101 --model-1 deeplabv3plus --backbone-2 resnext50 --model-2 deeplabv3plus --load-from-1 ./result/resnet101_deeplabv3plus/models/resnet101_deeplabv3plus_best.pth --load-from-2 ./result/resnext50_deeplabv3plus/models/resnext50_deeplabv3plus_best.pth --tta

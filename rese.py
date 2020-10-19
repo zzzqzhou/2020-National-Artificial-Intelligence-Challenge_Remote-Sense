@@ -38,16 +38,10 @@ class ReSe(Dataset):
             img = Image.open(os.path.join(self.base_dir, image_name))
             if self.transform:
                 img = self.transform(img)
-            if 'tif' in image_name:
-                return img, image_name.replace('.tif', '')
-            elif 'jpg' in image_name:
-                return img, image_name.replace('.jpg', '')
-        
+            return img, image_name.replace('.tif', '')
+            
         img = Image.open(os.path.join(self.base_dir, 'image', image_name))
-        if 'tif' in image_name:
-            mask = Image.open(os.path.join(self.base_dir, 'label', image_name.replace('tif', 'png')))
-        elif 'jpg' in image_name:
-            mask = Image.open(os.path.join(self.base_dir, 'label', image_name.replace('jpg', 'png')))
+        mask = Image.open(os.path.join(self.base_dir, 'label', image_name.replace('tif', 'png')))
         mask = mask2label(mask)
         if 'train' in self.split:
             rand = random.random()
