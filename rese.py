@@ -40,8 +40,8 @@ class ReSe(Dataset):
                 img = self.transform(img)
             return img, image_name.replace('.tif', '')
             
-        img = Image.open(os.path.join(self.base_dir, 'image', image_name))
-        mask = Image.open(os.path.join(self.base_dir, 'label', image_name.replace('tif', 'png')))
+        img = Image.open(os.path.join(self.base_dir, 'images', image_name))
+        mask = Image.open(os.path.join(self.base_dir, 'labels', image_name.replace('tif', 'png')))
         mask = mask2label(mask)
         if 'train' in self.split:
             rand = random.random()
