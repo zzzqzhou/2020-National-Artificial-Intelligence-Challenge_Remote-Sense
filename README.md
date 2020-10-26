@@ -16,12 +16,16 @@
 
 ## 训练命令:
 训练产生两个模型：`ResNet101_DeepLabV3+`和`ResNeXT50_DeepLabV3+`，模型保存在`./result`文件夹下
-> bash train.sh
-
+```
+bash train.sh
+```
 ## 测试命令
 生成`ResNet101_DeepLabV3+`和`ResNeXT50_DeepLabV3+`的预测结果，生成的预测图片分别保存在`./test_B_rn101_dlv3p`和`./test_B_rnx50_dlv3p`下，将相应文件夹下的`results/`文件夹打包即可提交。
-> bash test.sh
-
+```
+bash test.sh
+```
 ## Ensemble命令
 生成`ResNet101_DeepLabV3+`和`ResNeXT50_DeepLabV3+`融合的预测结果，生成的预测图片保存在`./test_B_ensemble`下，将该文件夹下的`results/`文件夹打包即可提交。
-> bash ensemble.sh
+```
+bash ensemble.sh
+```
