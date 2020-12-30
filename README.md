@@ -1,4 +1,4 @@
-# 2020年全国人工智能大赛-AI+遥感影像·初赛
+# 2020年全国人工智能大赛-AI+遥感影像·初赛（B榜42名）
 
 ## 实验设置
 初赛使用了`ResNet101`和`ResNeXt50`这两个模型作为backbone，采用了PyTorch官方提供的在ImageNet上的预训练模型，预训练模型下载链接见下方。分割模型的head采用了`DeepLabV3+`。在1块2080Ti上进行训练，batch设置大小为32，训练轮数共120个epoch，采用SGD作为优化器，动量参数momentum为0.9，权重衰减weight_decay为0.0001，初始学习率0.002，采用lr_poly策略调整学习率，其中power参数设置为0.9。更多详细的参数设定见`train.py`和`train.sh`。
